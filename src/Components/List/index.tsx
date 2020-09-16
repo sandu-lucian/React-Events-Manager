@@ -3,12 +3,13 @@ import Item from "./Item";
 import "./styles.css";
 
 function List(props: { list: Array<string> }) {
-  const lista = props.list;
-
-  const itemList = lista.map((item: string | undefined) => (
-    <Item content={item} key={item} />
-  ));
-  return <ul>{itemList}</ul>;
+  return (
+    <ul>
+      {props.list.map((item: string) => (
+        <Item content={item} key={item} />
+      ))}
+    </ul>
+  );
 }
 
 export default List;

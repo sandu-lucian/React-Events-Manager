@@ -12,11 +12,7 @@ function App() {
     "Greece",
   ];
 
-  return (
-    <div>
-      <List list={countries} />
-    </div>
-  );
+  return <List list={countries} />;
 }
 
 export default App;

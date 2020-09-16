@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-function Item(props: { content: string | undefined }) {
+function Item(props: { content: string }) {
   return (
     <li>
       <label htmlFor={props.content}>
