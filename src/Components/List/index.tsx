@@ -1,15 +1,25 @@
 import React from "react";
+import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import { Props } from "./Item";
 import Item from "./Item";
 import "./styles.css";
 
-function List(props: { list: Array<string> }) {
+type List = {
+  itemList: Array<Props>;
+};
+
+function Lista(props: List) {
   return (
-    <ul>
-      {props.list.map((item: string) => (
-        <Item content={item} key={item} />
-      ))}
-    </ul>
+    <Grid container direction="column" justify="center" alignItems="center">
+      <h1>Event list</h1>
+      <List>
+        {props.itemList.map((item) => (
+          <Item {...item} key={item.title} />
+        ))}
+      </List>
+    </Grid>
   );
 }
 
-export default List;
+export default Lista;
