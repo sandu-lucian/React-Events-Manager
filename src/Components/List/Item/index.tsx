@@ -7,11 +7,13 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import "./styles.css";
 
-export type Props = {
+export interface IEvent {
   title: string;
   date: string;
   description: string;
-};
+}
+
+type Props = IEvent & { onDelete: (id: string) => void };
 
 function Item(props: Props) {
   return (
@@ -28,7 +30,10 @@ function Item(props: Props) {
           <EditIcon />
         </IconButton>
 
-        <IconButton aria-label="delete">
+        <IconButton
+          aria-label="delete"
+          onClick={() => props.onDelete(props.title)}
+        >
           <DeleteIcon />
         </IconButton>
       </Grid>

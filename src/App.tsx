@@ -21,24 +21,12 @@ function App() {
       date: "11/09/2020",
       description: "Let's learn!",
     },
-    {
-      title: "Football Game",
-      date: "13/07/2020",
-      description: "Come see us!",
-    },
   ];
 
   return (
-    <Grid container xs alignContent="center" className="app-container">
+    <Grid container alignContent="center" className="app-container">
       <Grid item xs={4} className="module-container"></Grid>
-      <Grid
-        item
-        xs={4}
-        direction="column"
-        justify="center"
-        alignItems="center"
-        className="module-container"
-      >
+      <Grid item xs={4} className="module-container">
         <Lista itemList={events} />
       </Grid>
       <Grid item xs={4} className="module-container"></Grid>
