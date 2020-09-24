@@ -5,11 +5,11 @@ import { IEvent } from "./Item";
 import Item from "./Item";
 import "./styles.css";
 
-type List = {
+type ListType = {
   itemList: Array<IEvent>;
 };
 
-function Lista(props: List) {
+function DashboardList(props: ListType) {
   const [list, setList] = useState(props.itemList);
 
   const handleDelete = (title: string) => {
@@ -29,4 +29,4 @@ function Lista(props: List) {
   );
 }
 
-export default Lista;
+export default DashboardList;

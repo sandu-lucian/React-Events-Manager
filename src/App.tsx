@@ -1,7 +1,7 @@
 import React from "react";
 import "fontsource-roboto";
 import Grid from "@material-ui/core/Grid";
-import Lista from "./Components/List";
+import DashboardList from "./Components/DashboardList";
 import "./App.css";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
     <Grid container alignContent="center" className="app-container">
       <Grid item xs={4} className="module-container"></Grid>
       <Grid item xs={4} className="module-container">
-        <Lista itemList={events} />
+        <DashboardList itemList={events} />
       </Grid>
       <Grid item xs={4} className="module-container"></Grid>
     </Grid>
