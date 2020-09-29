@@ -1,28 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import "fontsource-roboto";
 import Grid from "@material-ui/core/Grid";
 import Form from "./Components/Form";
 import DashboardList from "./Components/DashboardList";
+import { IEvent } from "./Components/DashboardList/Item";
 import "./App.css";
 
 function App() {
-  const events = [
+  const [events, setEvents] = useState([
     {
-      title: "Football Game",
-      date: "13/07/2020",
-      description: "Come see us!",
+      title: "",
+      date: "",
+      description: "",
     },
-    {
-      title: "Concert",
-      date: "20/08/2020",
-      description: "Let's sing together!",
-    },
-    {
-      title: "React Course",
-      date: "11/09/2020",
-      description: "Let's learn!",
-    },
-  ];
+  ]);
+
+  const saveData = (data: IEvent) => {
+    setEvents((events) => [data, ...events]);
+    console.log(events);
+  };
 
   return (
     <Grid container alignContent="center" className="app-container">
@@ -34,7 +30,8 @@ function App() {
         justify="center"
         className="module-container"
       >
-        <Form></Form>
+        <button onClick={() => console.log(events)}>Log</button>
+        <Form onSubmit={saveData}></Form>
       </Grid>
       <Grid item xs={4} className="module-container">
         <DashboardList itemList={events} />

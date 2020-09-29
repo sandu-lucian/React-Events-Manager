@@ -1,16 +1,35 @@
 import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./styles.css";
 
-function Form() {
+export type Handlers = {
+  onSubmit: (data: {
+    title: string;
+    date: string;
+    description: string;
+  }) => void;
+};
+
+function Form(props: Handlers) {
   const [formData, setFormData] = useState({
     title: "",
     date: "",
     description: "",
   });
-  const handleSubmit = () => console.log("am dat submit");
+
+  const handleSubmit = () => {
+    props.onSubmit(formData);
+  };
+
+  ValidatorForm.addValidationRule("isValidTitle", (value) =>
+    value.length < 5 ? false : true
+  );
+
+  ValidatorForm.addValidationRule("isValidDescription", (value) =>
+    value.length > 20 ? false : true
+  );
 
   return (
     <ValidatorForm
@@ -18,6 +37,8 @@ function Form() {
       onError={(errors) => console.log(errors)}
     >
       <TextValidator
+        fullWidth
+        variant="outlined"
         label="Title"
         onChange={(e) => {
           const element = e.currentTarget as HTMLInputElement;
@@ -31,14 +52,16 @@ function Form() {
         }}
         name="title"
         value={formData.title}
-        validators={["required"]}
+        validators={["required", "isValidTitle"]}
         errorMessages={[
           "this field is required",
-          "title must be at least 5 characters long",
+          "Minimum 5 characters needed",
         ]}
       />
 
       <TextField
+        fullWidth
+        variant="outlined"
         type="date"
         label="Date"
         required
@@ -57,6 +80,8 @@ function Form() {
       />
 
       <TextValidator
+        fullWidth
+        variant="outlined"
         label="Description"
         onChange={(e) => {
           const element = e.currentTarget as HTMLInputElement;
@@ -70,6 +95,8 @@ function Form() {
         }}
         name="description"
         value={formData.description}
+        validators={["isValidDescription"]}
+        errorMessages={["Maximum 20 characters allowed"]}
       />
 
       <Button
@@ -77,9 +104,7 @@ function Form() {
       >
         Clear
       </Button>
-      <Button type="submit" onClick={() => console.log(formData)}>
-        Save
-      </Button>
+      <Button type="submit">Save</Button>
     </ValidatorForm>
   );
 }
