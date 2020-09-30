@@ -1,44 +1,48 @@
-import React, { useState } from "react";
-import "fontsource-roboto";
-import Grid from "@material-ui/core/Grid";
-import Form from "./Components/Form";
-import DashboardList from "./Components/DashboardList";
-import { IEvent } from "./Components/DashboardList/Item";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import 'fontsource-roboto';
+import Grid from '@material-ui/core/Grid';
+import EventForm from './Components/EventForm';
+import EventsList from './Components/EventsList';
+import { IEvent } from './Components/EventsList/EventItem';
+import './App.css';
+import { scryRenderedComponentsWithType } from 'react-dom/test-utils';
+import { resetWarningCache } from 'prop-types';
+import { PassThrough } from 'stream';
+import { listenerCount } from 'cluster';
 
 function App() {
-  const [events, setEvents] = useState([
-    {
-      title: "",
-      date: "",
-      description: "",
-    },
-  ]);
+	const [events, setEvents] = useState([] as Array<IEvent>);
 
-  const saveData = (data: IEvent) => {
-    setEvents((events) => [data, ...events]);
-    console.log(events);
-  };
+	const handleSave = (event: IEvent) => setEvents([...events, event]);
 
-  return (
-    <Grid container alignContent="center" className="app-container">
-      <Grid
-        item
-        xs={4}
-        container
-        alignContent="center"
-        justify="center"
-        className="module-container"
-      >
-        <button onClick={() => console.log(events)}>Log</button>
-        <Form onSubmit={saveData}></Form>
-      </Grid>
-      <Grid item xs={4} className="module-container">
-        <DashboardList itemList={events} />
-      </Grid>
-      <Grid item xs={4} className="module-container"></Grid>
-    </Grid>
-  );
+	return (
+		<Grid container alignContent="center" className="app-container">
+			<Grid
+				item
+				xs={4}
+				container
+				alignContent="center"
+				justify="center"
+				className="module-container"
+			>
+				<EventForm onSubmit={handleSave} />
+			</Grid>
+			<Grid item xs={4} className="module-container">
+				<EventsList events={events} />
+			</Grid>
+			<Grid item xs={4} className="module-container"></Grid>
+		</Grid>
+	);
 }
 
 export default App;
+
+// TODO list:
+
+// 1. Reset inputs form after saving the event
+// 2. There is a bug: Type 2 letters in title input and then click on clear.
+//    User expects to reset the form but the validation error stil there
+// 3. Add a new validation: in date field user can not select dates in the PassThrough.
+// 4. In date field should a default value: the current date.
+// 5. Add the edit flow.By clicking on edit button( from EventItem ) the form is prefield with the event item values.
+//    The user can update any field.By saving, the new values are displayed in the list
