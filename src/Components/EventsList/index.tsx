@@ -22,7 +22,7 @@ function EventsList(props: Props) {
 			<h1>Event list</h1>
 			<List>
 				{list.map((item, index) => (
-					<EventItem key={item.title} item={item} onDelete={handleDelete} />
+					<EventItem key={index} item={item} onDelete={handleDelete} />
 				))}
 			</List>
 		</Grid>
