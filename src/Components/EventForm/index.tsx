@@ -6,6 +6,7 @@ import MomentUtils from "@date-io/moment";
 import Button from "@material-ui/core/Button";
 import "./styles.css";
 import { IEvent } from "../EventsList/EventItem";
+import moment from "moment";
 
 export type Props = {
   onSubmit: (event: IEvent) => void;
@@ -27,6 +28,17 @@ function EventForm(props: Props) {
 
   const handleChange = (event: any) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
+    console.log(event.target);
+  };
+
+  const handleDateChange = (date: any) => {
+    const searchDate = moment(date).isValid()
+      ? moment(date).format("YYYY-MM-DD")
+      : "";
+
+    setFormData({ ...formData, date: searchDate });
+
+    console.log(formData, searchDate);
   };
 
   ValidatorForm.addValidationRule(
@@ -62,7 +74,7 @@ function EventForm(props: Props) {
         ]}
       />
 
-      <TextField
+      {/* <TextField
         InputLabelProps={{
           shrink: true,
         }}
@@ -74,17 +86,17 @@ function EventForm(props: Props) {
         onChange={handleChange}
         name="date"
         value={formData.date}
-      />
+      /> */}
 
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <DatePicker
           fullWidth
           inputVariant="outlined"
-          format={"DD/MM/yyyy"}
           label="Date"
           name="date"
+          format="DD-MM-YYYY"
           value={formData.date}
-          onChange={handleChange}
+          onChange={handleDateChange}
           variant="dialog"
           animateYearScrolling
           disablePast
