@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import TextField from "@material-ui/core/TextField";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import Button from "@material-ui/core/Button";
@@ -8,13 +7,14 @@ import "./styles.css";
 import { IEvent } from "../EventsList/EventItem";
 import moment from "moment";
 
-export type Props = {
+type Props = {
   onSubmit: (event: IEvent) => void;
+  onEdit: (event: IEvent) => void;
 };
 
 const initialState = {
   title: "",
-  date: "",
+  date: moment(new Date()).format("YYYY-MM-DD"),
   description: "",
 };
 
@@ -28,22 +28,19 @@ function EventForm(props: Props) {
 
   const handleChange = (event: any) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    console.log(event.target);
   };
 
   const handleDateChange = (date: any) => {
     const searchDate = moment(date).isValid()
       ? moment(date).format("YYYY-MM-DD")
-      : "";
+      : moment(new Date()).format("YYYY-MM-DD");
 
     setFormData({ ...formData, date: searchDate });
-
-    console.log(formData, searchDate);
   };
 
   ValidatorForm.addValidationRule(
     "isValidTitle",
-    (value) => !!(value.length >= 5)
+    (value) => !!(value.length >= 5 || value === "")
   );
 
   ValidatorForm.addValidationRule(
@@ -74,27 +71,13 @@ function EventForm(props: Props) {
         ]}
       />
 
-      {/* <TextField
-        InputLabelProps={{
-          shrink: true,
-        }}
-        fullWidth
-        variant="outlined"
-        type="date"
-        label="Date"
-        required
-        onChange={handleChange}
-        name="date"
-        value={formData.date}
-      /> */}
-
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <DatePicker
           fullWidth
           inputVariant="outlined"
           label="Date"
           name="date"
-          format="DD-MM-YYYY"
+          format="YYYY-MM-DD"
           value={formData.date}
           onChange={handleDateChange}
           variant="dialog"

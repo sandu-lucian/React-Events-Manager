@@ -13,7 +13,11 @@ export interface IEvent {
   description: string;
 }
 
-type Props = { item: IEvent; onDelete: (id: string) => void };
+type Props = {
+  item: IEvent;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
+};
 
 function EventItem(props: Props) {
   return (
@@ -26,7 +30,10 @@ function EventItem(props: Props) {
       </Grid>
 
       <Grid item xs={4}>
-        <IconButton aria-label="edit">
+        <IconButton
+          aria-label="edit"
+          onClick={() => props.onEdit(props.item.title)}
+        >
           <EditIcon />
         </IconButton>
 
