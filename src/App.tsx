@@ -5,44 +5,53 @@ import EventForm from "./Components/EventForm";
 import EventsList from "./Components/EventsList";
 import { IEvent } from "./Components/EventsList/EventItem";
 import "./App.css";
+import moment from "moment";
 
-function App() {
+export default () => {
   const [events, setEvents] = useState([] as Array<IEvent>);
 
-  let editableItem;
+  const [itemToEdit, setItemToEdit] = useState({
+    title: "",
+    date: moment(new Date()).format("YYYY-MM-DD"),
+    description: "",
+    id: "",
+  });
 
-  const editItem = (event: IEvent) => (editableItem = event);
+  const onFormSubmit = (event: IEvent) => {
+    const filteredItem = events.find((e) => e.id === event.id);
 
-  const handleSave = (event: IEvent) => setEvents([...events, event]);
+    if (!filteredItem) {
+      setEvents([...events, event]);
+    } else {
+      const filteredList = events.filter((e) => e.id !== filteredItem.id);
+      setEvents([...filteredList, event]);
+    }
+  };
+
+  const onItemDelete = (id: string) => {
+    setEvents(events.filter((e) => e.id !== id));
+  };
 
   return (
     <Grid container alignContent="center" className="app-container">
       <Grid
         item
-        xs={4}
+        xs={6}
         container
         alignContent="center"
         justify="center"
         className="module-container"
       >
-        <EventForm onSubmit={handleSave} onEdit={editableItem} />
+        <EventForm onSubmit={onFormSubmit} itemToEdit={itemToEdit} />
       </Grid>
-      <Grid item xs={4} className="module-container">
-        <EventsList events={events} toEdit={editItem} />
+      <Grid item xs={6} className="module-container">
+        <EventsList
+          events={events}
+          onListEdit={(event: IEvent) => setItemToEdit(event)}
+          onItemDelete={onItemDelete}
+        />
       </Grid>
-      <Grid item xs={4} className="module-container"></Grid>
+      {/* <Grid item xs={4} className="module-container"></Grid> */}
     </Grid>
   );
-}
-
-export default App;
-
-// TODO list:
-
-// 1. DONE - Reset inputs form after saving the event
-// 2. DONE - There is a bug: Type 2 letters in title input and then click on clear.
-//    User expects to reset the form but the validation error stil there
-// 3. DONE - Add a new validation: in date field user can not select dates in the PassThrough.
-// 4. DONE - In date field should a default value: the current date.
-// 5. Add the edit flow.By clicking on edit button( from EventItem ) the form is prefield with the event item values.
-//    The user can update any field.By saving, the new values are displayed in the list
+};

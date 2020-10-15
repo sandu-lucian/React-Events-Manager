@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
@@ -6,24 +6,28 @@ import Button from "@material-ui/core/Button";
 import "./styles.css";
 import { IEvent } from "../EventsList/EventItem";
 import moment from "moment";
+import { Chance } from "chance";
+
+const chance = new Chance();
 
 type Props = {
   onSubmit: (event: IEvent) => void;
-  onEdit: (event: IEvent) => void;
+  itemToEdit: IEvent;
 };
 
 const initialState = {
   title: "",
   date: moment(new Date()).format("YYYY-MM-DD"),
   description: "",
+  id: chance.guid(),
 };
 
-function EventForm(props: Props) {
-  const [formData, setFormData] = useState(initialState);
+const EventForm = (props: Props) => {
+  const [formData, setFormData] = useState(props.itemToEdit || initialState);
 
   const handleSubmit = () => {
     props.onSubmit(formData);
-    setFormData({ ...initialState });
+    setFormData({ ...initialState, id: chance.guid() });
   };
 
   const handleChange = (event: any) => {
@@ -37,6 +41,10 @@ function EventForm(props: Props) {
 
     setFormData({ ...formData, date: searchDate });
   };
+
+  useEffect(() => {
+    setFormData(props.itemToEdit);
+  }, [props.itemToEdit]);
 
   ValidatorForm.addValidationRule(
     "isValidTitle",
@@ -105,6 +113,6 @@ function EventForm(props: Props) {
       <Button type="submit">Save</Button>
     </ValidatorForm>
   );
-}
+};
 
 export default EventForm;
