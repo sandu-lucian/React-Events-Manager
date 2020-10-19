@@ -11,34 +11,42 @@ export interface IEvent {
   title: string;
   date: string;
   description: string;
+  id: string;
 }
 
-type Props = IEvent & { onDelete: (id: string) => void };
+type Props = {
+  item: IEvent;
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
+};
 
-function Item(props: Props) {
+const EventItem = (props: Props) => {
   return (
     <ListItem divider alignItems="center">
       <Grid item xs={4}>
-        <ListItemText primary={props.title} secondary={props.date} />
+        <ListItemText primary={props.item.title} secondary={props.item.date} />
       </Grid>
       <Grid item xs={4}>
-        <ListItemText primary={props.description} />
+        <ListItemText primary={props.item.description} />
       </Grid>
 
       <Grid item xs={4}>
-        <IconButton aria-label="edit">
+        <IconButton
+          aria-label="edit"
+          onClick={() => props.onEdit(props.item.id)}
+        >
           <EditIcon />
         </IconButton>
 
         <IconButton
           aria-label="delete"
-          onClick={() => props.onDelete(props.title)}
+          onClick={() => props.onDelete(props.item.id)}
         >
           <DeleteIcon />
         </IconButton>
       </Grid>
     </ListItem>
   );
-}
+};
 
-export default Item;
+export default EventItem;
