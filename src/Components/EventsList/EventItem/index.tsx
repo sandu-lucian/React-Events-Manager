@@ -1,10 +1,14 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import ImageIcon from "@material-ui/icons/Image";
 import IconButton from "@material-ui/core/IconButton";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import moment from "moment";
 import "./styles.css";
 
 export interface IEvent {
@@ -23,28 +27,32 @@ type Props = {
 const EventItem = (props: Props) => {
   return (
     <ListItem divider alignItems="center">
-      <Grid item xs={4}>
-        <ListItemText primary={props.item.title} secondary={props.item.date} />
-      </Grid>
-      <Grid item xs={4}>
-        <ListItemText primary={props.item.description} />
-      </Grid>
+      <ListItemAvatar>
+        <Avatar>
+          <ImageIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText
+        primary={`${props.item.title} on ${moment(props.item.date).format(
+          "MMMM Do YYYY"
+        )}`}
+        secondary={props.item.description}
+      />
 
-      <Grid item xs={4}>
-        <IconButton
-          aria-label="edit"
-          onClick={() => props.onEdit(props.item.id)}
-        >
-          <EditIcon />
-        </IconButton>
+      <IconButton aria-label="location">
+        <LocationOnIcon />
+      </IconButton>
 
-        <IconButton
-          aria-label="delete"
-          onClick={() => props.onDelete(props.item.id)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Grid>
+      <IconButton aria-label="edit" onClick={() => props.onEdit(props.item.id)}>
+        <EditIcon />
+      </IconButton>
+
+      <IconButton
+        aria-label="delete"
+        onClick={() => props.onDelete(props.item.id)}
+      >
+        <DeleteIcon />
+      </IconButton>
     </ListItem>
   );
 };

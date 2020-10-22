@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Grid from "@material-ui/core/Grid";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
@@ -61,56 +62,96 @@ const EventForm = (props: Props) => {
       onSubmit={handleSubmit}
       onError={(errors) => console.log(errors)}
     >
-      <TextValidator
-        InputLabelProps={{
-          shrink: true,
-        }}
-        fullWidth
-        variant="outlined"
-        label="Title"
-        onChange={handleChange}
-        name="title"
-        value={formData.title}
-        required
-        validators={["required", "isValidTitle"]}
-        errorMessages={[
-          "this field is required",
-          "Minimum 5 characters needed",
-        ]}
-      />
+      <Grid container direction="column" alignItems="center" spacing={3}>
+        <Grid item>
+          <h1>Create your event</h1>
+        </Grid>
+        <Grid item className="full-width">
+          <TextValidator
+            InputLabelProps={{
+              shrink: true,
+            }}
+            fullWidth
+            variant="outlined"
+            label="Title"
+            onChange={handleChange}
+            name="title"
+            value={formData.title}
+            required
+            validators={["required", "isValidTitle"]}
+            errorMessages={[
+              "this field is required",
+              "Minimum 5 characters needed",
+            ]}
+          />
+        </Grid>
 
-      <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DatePicker
-          fullWidth
-          inputVariant="outlined"
-          label="Date"
-          name="date"
-          format="YYYY-MM-DD"
-          value={formData.date}
-          onChange={handleDateChange}
-          variant="dialog"
-          animateYearScrolling
-          disablePast
-          required
-        />
-      </MuiPickersUtilsProvider>
+        <Grid item className="full-width">
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <DatePicker
+              fullWidth
+              inputVariant="outlined"
+              label="Date"
+              name="date"
+              format="YYYY-MM-DD"
+              value={formData.date}
+              onChange={handleDateChange}
+              variant="dialog"
+              animateYearScrolling
+              disablePast
+              required
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
 
-      <TextValidator
-        InputLabelProps={{
-          shrink: true,
-        }}
-        fullWidth
-        variant="outlined"
-        label="Description"
-        onChange={handleChange}
-        name="description"
-        value={formData.description}
-        validators={["isValidDescription"]}
-        errorMessages={["Maximum 20 characters allowed"]}
-      />
+        <Grid item className="full-width">
+          <TextValidator
+            InputLabelProps={{
+              shrink: true,
+            }}
+            fullWidth
+            variant="outlined"
+            label="Description"
+            onChange={handleChange}
+            name="description"
+            value={formData.description}
+            validators={["isValidDescription"]}
+            errorMessages={["Maximum 20 characters allowed"]}
+          />
+        </Grid>
 
-      <Button onClick={() => setFormData({ ...initialState })}>Clear</Button>
-      <Button type="submit">Save</Button>
+        <Grid item className="full-width" container justify="space-evenly">
+          <Grid item>
+            <Button
+              variant="outlined"
+              classes={{ outlined: "clear-btn" }}
+              style={{
+                color: "#d6362f",
+                borderColor: "#d6362f",
+                width: "100%",
+              }}
+              fullWidth
+              onClick={() => setFormData({ ...initialState })}
+            >
+              Clear
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              style={{
+                color: "white",
+                borderColor: "#1ba415",
+                backgroundColor: "#1ba415",
+              }}
+              fullWidth
+              type="submit"
+            >
+              Save
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
     </ValidatorForm>
   );
 };

@@ -1,5 +1,3 @@
-@import "../../colors";
-
 .full-width {
   width: 100%;
 }
@@ -9,5 +7,6 @@
 }
 
 .save-btn {
-  color: $continue;
+  color: #1ba415;
 }
+/*# sourceMappingURL=styles.css.map */

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "fontsource-roboto";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import EventForm from "./Components/EventForm";
 import EventsList from "./Components/EventsList";
 import { IEvent } from "./Components/EventsList/EventItem";
@@ -33,25 +34,28 @@ export default () => {
   };
 
   return (
-    <Grid container alignContent="center" className="app-container">
-      <Grid
-        item
-        xs={6}
-        container
-        alignContent="center"
-        justify="center"
-        className="module-container"
-      >
-        <EventForm onSubmit={onFormSubmit} itemToEdit={itemToEdit} />
+    <Grid container spacing={3}>
+      <Grid item xs={4}>
+        <Paper elevation={6} className="module-container">
+          <EventForm onSubmit={onFormSubmit} itemToEdit={itemToEdit} />
+        </Paper>
       </Grid>
-      <Grid item xs={6} className="module-container">
-        <EventsList
-          events={events}
-          onListEdit={(event: IEvent) => setItemToEdit(event)}
-          onItemDelete={onItemDelete}
-        />
+
+      <Grid item xs={4}>
+        <Paper elevation={6} className="module-container">
+          <EventsList
+            events={events}
+            onListEdit={(event: IEvent) => setItemToEdit(event)}
+            onItemDelete={onItemDelete}
+          />
+        </Paper>
       </Grid>
-      {/* <Grid item xs={4} className="module-container"></Grid> */}
+
+      <Grid item xs={4}>
+        <Paper elevation={6} className="module-container">
+          <h1>Hello</h1>
+        </Paper>
+      </Grid>
     </Grid>
   );
 };
