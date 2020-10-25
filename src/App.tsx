@@ -4,17 +4,20 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import EventForm from "./Components/EventForm";
 import EventsList from "./Components/EventsList";
+import FinalEvents from "./Components/FinalEvents";
 import { IEvent } from "./Components/EventsList/EventItem";
 import "./App.css";
 import moment from "moment";
 
 export default () => {
   const [events, setEvents] = useState([] as Array<IEvent>);
+  const [finalEvents, setFinalEvents] = useState([] as Array<IEvent>);
 
   const [itemToEdit, setItemToEdit] = useState({
     title: "",
     date: moment(new Date()).format("YYYY-MM-DD"),
     description: "",
+    location: { country: "", region: "" },
     id: "",
   });
 
@@ -26,6 +29,17 @@ export default () => {
     } else {
       const filteredList = events.filter((e) => e.id !== filteredItem.id);
       setEvents([...filteredList, event]);
+    }
+  };
+
+  const onLocationSet = (event: IEvent) => {
+    const filteredItem = finalEvents.find((e) => e.id === event.id);
+
+    if (!filteredItem) {
+      setFinalEvents([...finalEvents, event]);
+    } else {
+      const filteredList = finalEvents.filter((e) => e.id !== filteredItem.id);
+      setFinalEvents([...filteredList, event]);
     }
   };
 
@@ -45,6 +59,7 @@ export default () => {
         <Paper elevation={6} className="module-container">
           <EventsList
             events={events}
+            onLocationSet={onLocationSet}
             onListEdit={(event: IEvent) => setItemToEdit(event)}
             onItemDelete={onItemDelete}
           />
@@ -53,7 +68,7 @@ export default () => {
 
       <Grid item xs={4}>
         <Paper elevation={6} className="module-container">
-          <h1>Hello</h1>
+          <FinalEvents events={finalEvents} />
         </Paper>
       </Grid>
     </Grid>

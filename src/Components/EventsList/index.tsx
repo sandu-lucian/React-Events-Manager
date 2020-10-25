@@ -9,6 +9,7 @@ type Props = {
   events: Array<IEvent>;
   onListEdit: (event: IEvent) => void;
   onItemDelete: (id: string) => void;
+  onLocationSet: (event: IEvent) => void;
 };
 
 const EventsList = (props: Props) => {
@@ -16,6 +17,12 @@ const EventsList = (props: Props) => {
     const event = props.events.filter((e) => e.id === id);
     props.onListEdit(event[0]);
     console.log(event[0]);
+  };
+
+  const onLocationEdit = (id: string, country: string, region: string) => {
+    const event = props.events.filter((e) => e.id === id);
+    event[0].location = { country: country, region: region };
+    props.onLocationSet(event[0]);
   };
 
   return (
@@ -26,6 +33,7 @@ const EventsList = (props: Props) => {
           <EventItem
             key={index}
             item={item}
+            onLocationEdit={onLocationEdit}
             onEdit={onEdit}
             onDelete={() => props.onItemDelete(item.id)}
           />

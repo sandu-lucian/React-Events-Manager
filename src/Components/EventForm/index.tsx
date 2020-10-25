@@ -20,6 +20,7 @@ const initialState = {
   title: "",
   date: moment(new Date()).format("YYYY-MM-DD"),
   description: "",
+  location: { country: "", region: "" },
   id: chance.guid(),
 };
 
