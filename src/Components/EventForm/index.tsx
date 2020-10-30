@@ -9,9 +9,15 @@ import TitleIcon from "@material-ui/icons/Title";
 import EventIcon from "@material-ui/icons/Event";
 import DescriptionIcon from "@material-ui/icons/Description";
 import "./styles.css";
-import { IEvent } from "../EventsList/EventItem";
+import { IEvent } from "../EventsTable/EventRow";
 import { Chance } from "chance";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
 
 const chance = new Chance();
 
@@ -48,10 +54,14 @@ const EventForm = (props: Props) => {
   const styles = useStyles();
 
   const [formData, setFormData] = useState(props.itemToEdit || initialState);
+  const [locationDialogOpen, setLocationDialogOpen] = useState(false);
+  const [country, setCountry] = useState("");
+  const [region, setRegion] = useState("");
 
   const handleSubmit = () => {
     props.onSubmit(formData);
     setFormData({ ...initialState, id: chance.guid() });
+    console.log(formData);
   };
 
   const handleChange = (event: any) => {
@@ -85,7 +95,7 @@ const EventForm = (props: Props) => {
       onSubmit={handleSubmit}
       onError={(errors) => console.log(errors)}
     >
-      <Grid container direction="column" alignItems="center" spacing={3}>
+      <Grid container direction="column" alignItems="center" spacing={4}>
         <Grid item alignItems="center">
           <h1>Create your event</h1>
         </Grid>
@@ -97,11 +107,14 @@ const EventForm = (props: Props) => {
           direction="row"
           alignItems="center"
         >
-          <Grid item xs={2}>
-            <TitleIcon fontSize="large" classes={{ root: "form-cal-logo" }} />
+          <Grid item xs={2} justify="center" alignItems="center">
+            <TitleIcon fontSize="large" classes={{ root: "form-icons" }} />
           </Grid>
           <Grid item xs={10}>
             <TextValidator
+              InputLabelProps={{
+                shrink: true,
+              }}
               fullWidth
               variant="outlined"
               label="Title"
@@ -125,8 +138,8 @@ const EventForm = (props: Props) => {
           direction="row"
           alignItems="center"
         >
-          <Grid item xs={2}>
-            <EventIcon fontSize="large" classes={{ root: "form-cal-logo" }} />
+          <Grid item xs={2} justify="center" alignItems="center">
+            <EventIcon fontSize="large" classes={{ root: "form-icons" }} />
           </Grid>
           <Grid item xs={10}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -154,10 +167,10 @@ const EventForm = (props: Props) => {
           direction="row"
           alignItems="center"
         >
-          <Grid item xs={2}>
+          <Grid item xs={2} justify="center" alignItems="center">
             <DescriptionIcon
               fontSize="large"
-              classes={{ root: "form-cal-logo" }}
+              classes={{ root: "form-icons" }}
             />
           </Grid>
           <Grid item xs={10}>
@@ -174,6 +187,74 @@ const EventForm = (props: Props) => {
               validators={["isValidDescription"]}
               errorMessages={["Maximum 20 characters allowed"]}
             />
+          </Grid>
+        </Grid>
+
+        <Grid
+          item
+          className="full-width"
+          container
+          direction="row"
+          alignItems="center"
+        >
+          <Grid item xs={2} justify="center" alignItems="center">
+            <LocationOnIcon fontSize="large" classes={{ root: "form-icons" }} />
+
+            <Dialog
+              open={locationDialogOpen}
+              onClose={() => setLocationDialogOpen(false)}
+            >
+              <DialogTitle>Choose event location</DialogTitle>
+              <DialogContent>
+                <CountryDropdown
+                  value={country}
+                  onChange={(value) => setCountry(value)}
+                />
+                <RegionDropdown
+                  country={country}
+                  value={region}
+                  onChange={(value) => setRegion(value)}
+                  disableWhenEmpty
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={() => {
+                    setCountry("");
+                    setRegion("");
+                    setLocationDialogOpen(false);
+                  }}
+                  color="primary"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      location: {
+                        country: country,
+                        region: region,
+                      },
+                    });
+                    setLocationDialogOpen(false);
+                  }}
+                  color="primary"
+                >
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+          <Grid item xs={10}>
+            <Button
+              fullWidth
+              variant="outlined"
+              aria-label="location"
+              onClick={() => setLocationDialogOpen(true)}
+            >
+              Set event location
+            </Button>
           </Grid>
         </Grid>
 
