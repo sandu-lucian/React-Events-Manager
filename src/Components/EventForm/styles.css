@@ -1,9 +1,7 @@
-@import "../../colors";
-
 .full-width {
   width: 100%;
 }
 
 .form-icons {
-  color: $blue;
+  color: #13163a;
 }
