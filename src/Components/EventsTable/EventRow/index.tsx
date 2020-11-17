@@ -2,11 +2,10 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import moment from "moment";
-
-import "./styles.css";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import moment from "moment";
+import "./styles.css";
 
 export interface IEvent {
   title: string;
@@ -30,7 +29,7 @@ const EventRow = (props: Props) => {
         {moment(props.item.date).format("MMMM Do YYYY")}
       </TableCell>
       <TableCell align="right">
-        {props.item.location.region !== "" && props.item.location.country !== ""
+        {props.item.location.region && props.item.location.country
           ? `${props.item.location.region}, ${props.item.location.country}`
           : null}
       </TableCell>
