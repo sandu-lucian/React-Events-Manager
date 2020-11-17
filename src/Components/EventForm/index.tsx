@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
-import moment from "moment";
 import Button from "@material-ui/core/Button";
 import TitleIcon from "@material-ui/icons/Title";
 import EventIcon from "@material-ui/icons/Event";
 import DescriptionIcon from "@material-ui/icons/Description";
-import "./styles.css";
 import { IEvent } from "../EventsTable/EventRow";
 import { Chance } from "chance";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import MomentUtils from "@date-io/moment";
+import moment from "moment";
+import "./styles.css";
 
 const chance = new Chance();
 
@@ -39,9 +39,6 @@ const useStyles = makeStyles({
     color: "#d6362f",
     borderColor: "#d6362f",
     width: "100%",
-    /* "&$hover": {
-      color: "#1ba415",
-    }, */
   },
   contained: {
     color: "white",
@@ -61,7 +58,6 @@ const EventForm = (props: Props) => {
   const handleSubmit = () => {
     props.onSubmit(formData);
     setFormData({ ...initialState, id: chance.guid() });
-    console.log(formData);
   };
 
   const handleChange = (event: any) => {
@@ -233,8 +229,8 @@ const EventForm = (props: Props) => {
                     setFormData({
                       ...formData,
                       location: {
-                        country: country,
-                        region: region,
+                        country,
+                        region,
                       },
                     });
                     setLocationDialogOpen(false);

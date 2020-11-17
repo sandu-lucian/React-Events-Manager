@@ -1,13 +1,13 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { IEvent } from "./EventRow";
-import EventRow from "./EventRow";
-import "./styles.css";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
+import { IEvent } from "./EventRow";
+import EventRow from "./EventRow";
+import "./styles.css";
 
 type Props = {
   events: Array<IEvent>;

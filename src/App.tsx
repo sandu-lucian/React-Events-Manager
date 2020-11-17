@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "fontsource-roboto";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import EventForm from "./Components/EventForm";
 import EventsList from "./Components/EventsTable";
 import { IEvent } from "./Components/EventsTable/EventRow";
-import "./App.css";
 import moment from "moment";
+import "fontsource-roboto";
+import "./App.css";
 
 export default () => {
   const [events, setEvents] = useState([] as Array<IEvent>);
@@ -20,7 +20,6 @@ export default () => {
   });
 
   const onFormSubmit = (event: IEvent) => {
-    console.log(events);
     const filteredItem = events.find((e) => e.id === event.id);
 
     if (!filteredItem) {
@@ -30,17 +29,6 @@ export default () => {
       setEvents([...filteredList, event]);
     }
   };
-
-  /* const onLocationSet = (event: IEvent) => {
-    const filteredItem = finalEvents.find((e) => e.id === event.id);
-
-    if (!filteredItem) {
-      setFinalEvents([...finalEvents, event]);
-    } else {
-      const filteredList = finalEvents.filter((e) => e.id !== filteredItem.id);
-      setFinalEvents([...filteredList, event]);
-    }
-  }; */
 
   const onItemDelete = (id: string) => {
     setEvents(events.filter((e) => e.id !== id));
