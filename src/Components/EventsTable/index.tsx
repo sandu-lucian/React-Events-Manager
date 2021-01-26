@@ -7,7 +7,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import { IEvent } from "./EventRow";
 import EventRow from "./EventRow";
-import "./styles.css";
 
 type Props = {
   events: Array<IEvent>;

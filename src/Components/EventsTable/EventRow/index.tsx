@@ -5,7 +5,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import moment from "moment";
-import "./styles.css";
 
 export interface IEvent {
   title: string;

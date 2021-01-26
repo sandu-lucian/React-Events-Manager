@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import EventForm from "./Components/EventForm";
-import EventsList from "./Components/EventsTable";
-import { IEvent } from "./Components/EventsTable/EventRow";
+import EventForm from "../EventForm";
+import EventsList from "../EventsTable";
+import { IEvent } from "../EventsTable/EventRow";
 import moment from "moment";
 import "fontsource-roboto";
-import "./App.css";
+import "./styles.scss";
 
-export default () => {
+const App = () => {
   const [events, setEvents] = useState([] as Array<IEvent>);
 
   const [itemToEdit, setItemToEdit] = useState({
@@ -56,3 +56,5 @@ export default () => {
     </div>
   );
 };
+
+export default App;

@@ -17,7 +17,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
-import "./styles.css";
+import "./styles.scss";
 
 const chance = new Chance();
 
